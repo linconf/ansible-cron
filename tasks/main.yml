@@ -1,0 +1,35 @@
+---
+
+#|  Setup Cron
+
+- name: main - Include OS-Specific Variables
+  include_vars: '{{ item }}'
+  with_first_found:
+    - '{{ ansible_distribution }}.yml'
+    - '{{ ansible_os_family }}.yml'
+    - 'default.yml'
+  when: cron_role_enabled | bool
+  tags: [ 'cron', 'cron-install' ]
+
+- name: main - Install Cron
+  include: '{{ found_item }}'
+  with_first_found:
+    - 'install/{{ ansible_distribution }}.yml'
+    - 'install/{{ ansible_os_family }}.yml'
+    - 'install/default.yml'
+  when: cron_role_enabled | bool
+  loop_control:
+    loop_var: found_item
+  tags: [ 'cron', 'cron-install' ]
+
+- name: main - Configure Cron
+  include: '{{ found_item }}'
+  with_first_found:
+    - 'config/{{ ansible_distribution }}.yml'
+    - 'config/{{ ansible_os_family }}.yml'
+    - 'config/default.yml'
+  when: (ansible_role_enabled | bool) and
+        (ansible_role_configure_ansible | bool)
+  loop_control:
+    loop_var: found_item
+  tags: [ 'cron', 'cron-config' ]

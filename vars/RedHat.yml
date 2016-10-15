@@ -1,0 +1,6 @@
+---
+
+#|  Default OS Variables
+
+cron_package_name: crontabs
+cron_service_name: crond

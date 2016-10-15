@@ -1,0 +1,37 @@
+---
+
+#| Set to `False` to disable the role
+
+cron_role_enabled: True
+
+
+#|
+#| Settings
+#|
+
+# See: http://docs.ansible.com/ansible/cron_module.html
+cron_jobs: []
+  # - name:
+  #   job:
+  #   cron_file:
+  #   minute:
+  #   hour:
+  #   day:
+  #   weekday:
+  #   month:
+  #   state:
+  #   user:
+cron_host_jobs: []
+cron_group_jobs: []
+
+# See: http://docs.ansible.com/ansible/cronvar_module.html
+cron_vars: []
+  # - name: 'PATH'
+  #   value: '/usr/bin:/bin:/usr/local/bin'
+  #   user: 'root'
+cron_host_vars: []
+cron_group_vars: []
+
+# System service status (on-boot)
+cron_service_enabled: yes
+cron_service_state: started

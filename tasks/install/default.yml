@@ -1,0 +1,6 @@
+---
+
+- name: install/default - Install cron
+  package: 
+    name: '{{ cron_package_name }}'
+    state: installed

@@ -1,0 +1,48 @@
+---
+
+- name: config/default - Manage cron.d and crontab entries
+  cron:
+    baclup: '{{ item.backup | default(omit) }}'
+    cron_file: '{{ item.cron_file | default(omit) }}'
+    day: '{{ item.day | default(omit) }}'
+    disabled: '{{ item.disabled | default(omit) }}'
+    env: '{{ item.env | default(omit) }}'
+    hour: '{{ item.hour | default(omit) }}'
+    insertafter: '{{ item.insertafter | default(omit) }}'
+    insertbefore: '{{ item.insertbefore | default(omit) }}'
+    job: '{{ item.job | default(omit) }}'
+    minute: '{{ item.minute | default(omit) }}'
+    month: '{{ item.month | default(omit) }}'
+    reboot: '{{ item.reboot | default(item) }}'
+    name: '{{ item.name | default(item) }}'
+    special_time: '{{ item.special_time | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    user: '{{ item.user | default(omit) }}'
+    weekday: '{{ item.weekday | default(omit) }}'
+  with_flattened:
+    - '{{ cron_jobs }}'
+    - '{{ cron_host_jobs }}'
+    - '{{ cron_group_jobs }}'
+
+- name: config/default - Manage variables in crontabs
+  cronvar:
+    backup: '{{ item.backup | default(omit) }}'
+    cron_file: '{{ item.cron_file | default(omit) }}'
+    insertafter: '{{ item.insertafter | default(omit) }}'
+    insertbefore: '{{ item.insertbefore | default(omit) }}'
+    name: '{{ item.name | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    user: '{{ item.user | default(omit) }}'
+    value: '{{ item.value | default(omit) }}'
+  with_flattened:
+    - '{{ cron_vars }}'
+    - '{{ cron_host_vars }}'
+    - '{{ cron_group_vars }}'
+
+- name: config/default - Configuring service
+  service:
+    arguments: '{{ cron_service_arguments | default(omit) }}'
+    name: '{{ cron_service_name }}'
+    enabled: '{{ cron_service_enabled }}'
+    sleep: '{{ cron_service_sleep | default(omit) }}'
+    state: '{{ cron_service_state }}'
