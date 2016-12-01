@@ -28,8 +28,7 @@
     - 'config/{{ ansible_distribution }}.yml'
     - 'config/{{ ansible_os_family }}.yml'
     - 'config/default.yml'
-  when: (ansible_role_enabled | bool) and
-        (ansible_role_configure_ansible | bool)
+  when: cron_role_enabled | bool
   loop_control:
     loop_var: found_item
   tags: [ 'cron', 'cron-config' ]
